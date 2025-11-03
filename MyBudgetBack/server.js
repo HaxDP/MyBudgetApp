@@ -358,7 +358,9 @@ app.put('/transactions/:transactionId', async (req, res) => {
   }
 });
 
+console.log("--- ЗАПУСК НОВОЇ ВЕРСІЇ СЕРВЕРА (v3) ---"); 
 
 app.listen(port, '0.0.0.0', () => {
+    console.log(`--- УСПІШНИЙ ЗАПУСК v3 на порту ${port} ---`);
     console.log(`🚀 Сервер "MyBudgetApp" запущено на порту ${port}`);
 });
