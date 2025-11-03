@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://mybudgetapp-production-8c3a.up.railway.app';
+const API_BASE_URL = 'http://localhost:3001';
 
 function getUserData() {
     const userDataString = localStorage.getItem('myBudgetAppUser');

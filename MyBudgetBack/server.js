@@ -1,25 +1,11 @@
 const express = require('express');
-process.on('unhandledRejection', (reason, promise) => {
-    console.error('!!! НЕПЕРЕХОПЛЕНА ПОМИЛКА (UNHANDLED REJECTION) !!!');
-    console.error('Причина:', reason);
-    console.error('--- Повний стек помилки ---');
-    console.error(reason.stack || 'Стек недоступний');
-    console.error('---------------------------------');
-});
-
-process.on('uncaughtException', (error) => {
-    console.error('!!! НЕПЕРЕХОПЛЕНА ПОМИЛКА (UNCAUGHT EXCEPTION) !!!');
-    console.error('Помилка:', error);
-    console.error('--- Повний стек помилки ---');
-    console.error(error.stack || 'Стек недоступний');
-    console.error('---------------------------------');
-});
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 const pool = require('./db');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -360,22 +346,7 @@ app.put('/transactions/:transactionId', async (req, res) => {
   }
 });
 
-console.log("--- ПЕРЕВІРКА ЗМІННИХ БАЗИ ДАНИХ ---");
-console.log(`MYSQL_HOST: ${process.env.MYSQL_HOST ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
-console.log(`MYSQL_USER: ${process.env.MYSQL_USER ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
-console.log(`MYSQL_PASSWORD: ${process.env.MYSQL_PASSWORD ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
-console.log(`MYSQL_DATABASE: ${process.env.MYSQL_DATABASE ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
-console.log(`MYSQL_PORT: ${process.env.MYSQL_PORT || 'використовуємо 3306'}`);
-console.log("-------------------------------------");
-
-app.get('/', (req, res) => {
-    console.log("--- ОТРИМАНО PING-ЗАПИТ НА / ---");
-    res.send('Бекенд "MyBudgetApp" працює!');
-});
-
-console.log("--- ЗАПУСК НОВОЇ ВЕРСІЇ СЕРВЕРА (v4 - без 0.0.0.0) ---"); 
 
 app.listen(port, () => {
-    console.log(`--- УСПІШНИЙ ЗАПУСК v4 на порту ${port} ---`);
-    console.log(`🚀 Сервер "MyBudgetApp" запущено на порту ${port}`);
+  console.log(`🚀 Сервер "MyBudgetApp" запущено на http://localhost:${port}`);
 });
