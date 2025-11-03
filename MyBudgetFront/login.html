@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід - MyBudgetApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 2. ДОДАЄМО ПЕРЕМИКАЧ ТЕМИ -->
+    <div class="position-absolute top-0 end-0 p-3">
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+        </div>
+    </div>
+
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <h3 class="text-center mb-4">Вхід в MyBudgetApp</h3>
+                    <form id="login-form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Увійти</button>
+                    </form>
+                     <p class="text-center mt-3 mb-0">
+                        Немає акаунту? <a href="register.html">Створити</a>
+                    </p>
+                    <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('checkbox');
+        
+        function setupTheme() {
+            const currentTheme = localStorage.getItem('myBudgetAppTheme');
+            if (currentTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                themeToggle.checked = false;
+            }
+        }
+        
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('myBudgetAppTheme', 'dark');
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                localStorage.setItem('myBudgetAppTheme', 'light');
+            }
+        });
+        
+        setupTheme();
+
+        const form = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:3001/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Щось пішло не так');
+                }
+
+                localStorage.setItem('myBudgetAppUser', JSON.stringify(data));
+                window.location.href = 'index.html';
+
+            } catch (err) {
+                errorMessage.textContent = err.message;
+                errorMessage.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>
