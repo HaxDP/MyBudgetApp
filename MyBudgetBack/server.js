@@ -345,7 +345,18 @@ app.put('/transactions/:transactionId', async (req, res) => {
   }
 });
 
-console.log("--- ЗАПУСК НОВОЇ ВЕРСІЇ СЕРВЕРА (v3) ---"); 
+console.log("--- ПЕРЕВІРКА ЗМІННИХ БАЗИ ДАНИХ ---");
+console.log(`MYSQL_HOST: ${process.env.MYSQL_HOST ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
+console.log(`MYSQL_USER: ${process.env.MYSQL_USER ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
+console.log(`MYSQL_PASSWORD: ${process.env.MYSQL_PASSWORD ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
+console.log(`MYSQL_DATABASE: ${process.env.MYSQL_DATABASE ? 'ЗНАЙДЕНО' : 'НЕМАЄ'}`);
+console.log(`MYSQL_PORT: ${process.env.MYSQL_PORT || 'використовуємо 3306'}`);
+console.log("-------------------------------------");
+
+app.get('/', (req, res) => {
+    console.log("--- ОТРИМАНО PING-ЗАПИТ НА / ---");
+    res.send('Бекенд "MyBudgetApp" працює!');
+});
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`--- УСПІШНИЙ ЗАПУСК v3 на порту ${port} ---`);
