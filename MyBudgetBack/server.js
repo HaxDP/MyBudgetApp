@@ -373,7 +373,9 @@ app.get('/', (req, res) => {
     res.send('Бекенд "MyBudgetApp" працює!');
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`--- УСПІШНИЙ ЗАПУСК v3 на порту ${port} ---`);
+console.log("--- ЗАПУСК НОВОЇ ВЕРСІЇ СЕРВЕРА (v4 - без 0.0.0.0) ---"); 
+
+app.listen(port, () => {
+    console.log(`--- УСПІШНИЙ ЗАПУСК v4 на порту ${port} ---`);
     console.log(`🚀 Сервер "MyBudgetApp" запущено на порту ${port}`);
 });
