@@ -6,19 +6,7 @@ const pool = require('./db');
 const app = express();
 const port = process.env.PORT || 3001;
 
-const allowedOrigins = [
-    'https://monumental-alpaca-f9eea3.netlify.app'
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
+app.use(cors());
 app.use(express.json());
 
 app.post('/register', async (req, res) => {
