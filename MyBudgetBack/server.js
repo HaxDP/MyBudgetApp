@@ -359,6 +359,6 @@ app.put('/transactions/:transactionId', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`🚀 Сервер "MyBudgetApp" запущено на http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`🚀 Сервер "MyBudgetApp" запущено на порту ${port}`);
 });
