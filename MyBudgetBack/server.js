@@ -1,4 +1,19 @@
 const express = require('express');
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('!!! НЕПЕРЕХОПЛЕНА ПОМИЛКА (UNHANDLED REJECTION) !!!');
+    console.error('Причина:', reason);
+    console.error('--- Повний стек помилки ---');
+    console.error(reason.stack || 'Стек недоступний');
+    console.error('---------------------------------');
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('!!! НЕПЕРЕХОПЛЕНА ПОМИЛКА (UNCAUGHT EXCEPTION) !!!');
+    console.error('Помилка:', error);
+    console.error('--- Повний стек помилки ---');
+    console.error(error.stack || 'Стек недоступний');
+    console.error('---------------------------------');
+});
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const pool = require('./db');
